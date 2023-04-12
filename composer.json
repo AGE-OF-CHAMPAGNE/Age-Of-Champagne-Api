@@ -80,6 +80,34 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "start": [
+            "Composer\\Config::disableProcessTimeout",
+            "symfony serve"
+        ],
+        "test:cs": [
+            "php vendor/bin/php-cs-fixer fix --dry-run"
+        ],
+        "fix:cs": [
+            "php vendor/bin/php-cs-fixer fix"
+        ],
+        "test": [
+            "@test:cs",
+            "@test:codeception"
+        ],
+        "db": [
+            "Composer\\Config::disableProcessTimeout",
+            "php bin/console doctrine:database:drop --force --if-exists",
+            "php bin/console doctrine:database:create",
+            "php bin/console doctrine:migrations:migrate --no-interaction",
+            "php bin/console doctrine:fixtures:load --no-interaction"
+        ],
+        "test:codeception": [
+            "php vendor/bin/codecept clean",
+            "php bin/console doctrine:database:drop --force --quiet --env=test",
+            "php bin/console doctrine:database:create --quiet --env=test",
+            "php bin/console doctrine:schema:create --quiet --env=test",
+            "php vendor/bin/codecept run"
         ]
     },
     "conflict": {
