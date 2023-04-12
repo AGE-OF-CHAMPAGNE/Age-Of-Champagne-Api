@@ -29,6 +29,9 @@ class Vintage
     #[ORM\Column(type: Types::BLOB)]
     private $card = null;
 
+    #[ORM\ManyToOne(inversedBy: 'vintages')]
+    private ?User $users = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Vintage
     public function setCard($card): self
     {
         $this->card = $card;
+
+        return $this;
+    }
+
+    public function getUsers(): ?User
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $users): self
+    {
+        $this->users = $users;
 
         return $this;
     }

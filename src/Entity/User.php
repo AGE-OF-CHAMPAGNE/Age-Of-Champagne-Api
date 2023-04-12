@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -33,6 +35,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
+
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Vintage::class)]
+    private Collection $vintages;
+
+    public function __construct()
+    {
+        $this->vintages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,6 +134,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vintage>
+     */
+    public function getVintages(): Collection
+    {
+        return $this->vintages;
+    }
+
+    public function addVintage(Vintage $vintage): self
+    {
+        if (!$this->vintages->contains($vintage)) {
+            $this->vintages->add($vintage);
+            $vintage->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVintage(Vintage $vintage): self
+    {
+        if ($this->vintages->removeElement($vintage)) {
+            // set the owning side to null (unless already changed)
+            if ($vintage->getUsers() === $this) {
+                $vintage->setUsers(null);
+            }
+        }
 
         return $this;
     }
