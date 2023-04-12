@@ -26,7 +26,7 @@ class Vintage
     #[ORM\Column]
     private ?float $size = null;
 
-    #[ORM\Column(type: Types::BLOB)]
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $card = null;
 
     #[ORM\ManyToOne(inversedBy: 'vintages')]
