@@ -36,12 +36,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Vintage::class)]
-    private Collection $vintages;
+    #[ORM\ManyToMany(targetEntity: Vintage::class, inversedBy: 'users')]
+    private Collection $Vintages;
 
     public function __construct()
     {
-        $this->vintages = new ArrayCollection();
+        $this->Vintages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,14 +143,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getVintages(): Collection
     {
-        return $this->vintages;
+        return $this->Vintages;
     }
 
     public function addVintage(Vintage $vintage): self
     {
-        if (!$this->vintages->contains($vintage)) {
-            $this->vintages->add($vintage);
-            $vintage->setUsers($this);
+        if (!$this->Vintages->contains($vintage)) {
+            $this->Vintages->add($vintage);
         }
 
         return $this;
@@ -158,12 +157,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeVintage(Vintage $vintage): self
     {
-        if ($this->vintages->removeElement($vintage)) {
-            // set the owning side to null (unless already changed)
-            if ($vintage->getUsers() === $this) {
-                $vintage->setUsers(null);
-            }
-        }
+        $this->Vintages->removeElement($vintage);
 
         return $this;
     }

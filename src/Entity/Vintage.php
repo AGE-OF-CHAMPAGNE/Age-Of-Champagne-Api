@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VintageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -30,14 +32,19 @@ class Vintage
     private $card = null;
 
     #[ORM\ManyToOne(inversedBy: 'vintages')]
-    private ?User $users = null;
-
-    #[ORM\ManyToOne(inversedBy: 'vintages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?District $district = null;
 
     #[ORM\ManyToOne(inversedBy: 'vintages')]
     private ?VintageType $vintage_type = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'Vintages')]
+    private Collection $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,18 +111,6 @@ class Vintage
         return $this;
     }
 
-    public function getUsers(): ?User
-    {
-        return $this->users;
-    }
-
-    public function setUsers(?User $users): self
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
     public function getDistrict(): ?District
     {
         return $this->district;
@@ -136,6 +131,33 @@ class Vintage
     public function setVintageType(?VintageType $vintage_type): self
     {
         $this->vintage_type = $vintage_type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addVintage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeVintage($this);
+        }
 
         return $this;
     }
