@@ -41,9 +41,13 @@ class Vintage
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'Vintages')]
     private Collection $users;
 
+    #[ORM\OneToMany(mappedBy: 'vintages', targetEntity: Benefit::class)]
+    private Collection $benefits;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->benefits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,6 +161,36 @@ class Vintage
     {
         if ($this->users->removeElement($user)) {
             $user->removeVintage($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Benefit>
+     */
+    public function getBenefits(): Collection
+    {
+        return $this->benefits;
+    }
+
+    public function addBenefit(Benefit $benefit): self
+    {
+        if (!$this->benefits->contains($benefit)) {
+            $this->benefits->add($benefit);
+            $benefit->setVintages($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBenefit(Benefit $benefit): self
+    {
+        if ($this->benefits->removeElement($benefit)) {
+            // set the owning side to null (unless already changed)
+            if ($benefit->getVintages() === $this) {
+                $benefit->setVintages(null);
+            }
         }
 
         return $this;

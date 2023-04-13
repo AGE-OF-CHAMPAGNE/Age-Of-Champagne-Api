@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Factory\BenefitFactory;
 use App\Factory\DistrictFactory;
 use App\Factory\VintageFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -34,7 +35,8 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
             'longitude' => 3.9970886,
             'latitude' => 49.0621668,
             'district' => DistrictFactory::find(['name' => 'Vallé de la marne']),
-        ]);
+            'benefits' => BenefitFactory::randomRange(0, 3),
+            ]);
 
         $this->createVintage([
             'name' => 'Barbonne-Fayel',
