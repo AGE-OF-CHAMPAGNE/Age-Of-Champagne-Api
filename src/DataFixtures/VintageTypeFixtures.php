@@ -13,6 +13,5 @@ class VintageTypeFixtures extends Fixture
         $file = file_get_contents(__DIR__.'/json/VintageType.json');
         $array = json_decode($file, true);
         VintageTypeFactory::createSequence($array);
-
     }
 }

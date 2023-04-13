@@ -29,6 +29,5 @@ class DistrictFixtures extends Fixture
             'name' => 'Montagne de Reims',
             'color_code' => 'FABD62',
         ]);
-
     }
 }
