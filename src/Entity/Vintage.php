@@ -32,6 +32,10 @@ class Vintage
     #[ORM\ManyToOne(inversedBy: 'vintages')]
     private ?User $users = null;
 
+    #[ORM\ManyToOne(inversedBy: 'vintages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?District $district = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +109,18 @@ class Vintage
     public function setUsers(?User $users): self
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    public function getDistrict(): ?District
+    {
+        return $this->district;
+    }
+
+    public function setDistrict(?District $district): self
+    {
+        $this->district = $district;
 
         return $this;
     }
