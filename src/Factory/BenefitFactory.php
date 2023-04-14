@@ -11,21 +11,21 @@ use Zenstruck\Foundry\RepositoryProxy;
 /**
  * @extends ModelFactory<Benefit>
  *
- * @method        Benefit|Proxy create(array|callable $attributes = [])
- * @method static Benefit|Proxy createOne(array $attributes = [])
- * @method static Benefit|Proxy find(object|array|mixed $criteria)
- * @method static Benefit|Proxy findOrCreate(array $attributes)
- * @method static Benefit|Proxy first(string $sortedField = 'id')
- * @method static Benefit|Proxy last(string $sortedField = 'id')
- * @method static Benefit|Proxy random(array $attributes = [])
- * @method static Benefit|Proxy randomOrCreate(array $attributes = [])
+ * @method        Benefit|Proxy                     create(array|callable $attributes = [])
+ * @method static Benefit|Proxy                     createOne(array $attributes = [])
+ * @method static Benefit|Proxy                     find(object|array|mixed $criteria)
+ * @method static Benefit|Proxy                     findOrCreate(array $attributes)
+ * @method static Benefit|Proxy                     first(string $sortedField = 'id')
+ * @method static Benefit|Proxy                     last(string $sortedField = 'id')
+ * @method static Benefit|Proxy                     random(array $attributes = [])
+ * @method static Benefit|Proxy                     randomOrCreate(array $attributes = [])
  * @method static BenefitRepository|RepositoryProxy repository()
- * @method static Benefit[]|Proxy[] all()
- * @method static Benefit[]|Proxy[] createMany(int $number, array|callable $attributes = [])
- * @method static Benefit[]|Proxy[] createSequence(iterable|callable $sequence)
- * @method static Benefit[]|Proxy[] findBy(array $attributes)
- * @method static Benefit[]|Proxy[] randomRange(int $min, int $max, array $attributes = [])
- * @method static Benefit[]|Proxy[] randomSet(int $number, array $attributes = [])
+ * @method static Benefit[]|Proxy[]                 all()
+ * @method static Benefit[]|Proxy[]                 createMany(int $number, array|callable $attributes = [])
+ * @method static Benefit[]|Proxy[]                 createSequence(iterable|callable $sequence)
+ * @method static Benefit[]|Proxy[]                 findBy(array $attributes)
+ * @method static Benefit[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
+ * @method static Benefit[]|Proxy[]                 randomSet(int $number, array $attributes = [])
  */
 final class BenefitFactory extends ModelFactory
 {
