@@ -4,11 +4,15 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\Controller\UserGetMeController;
 use App\Repository\UserRepository;
+use App\State\UserPasswordHasher;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +24,29 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(normalizationContext: ['groups' => ['get_User']])]
 #[Get]
 #[GetCollection]
+#[GetCollection(
+    uriTemplate: '/me',
+    controller: UserGetMeController::class,
+    openapiContext: [
+        'description' => 'Retrieves the current User',
+        'summary' => 'Retrieves the current User',
+        'responses' => [
+            '200' => [
+                'description' => 'Return the current User logged',
+            ],
+            '401' => [
+                'description' => 'User isnt logged',
+            ],
+        ],
+    ],
+    paginationEnabled: false,
+    normalizationContext: ['groups' => [
+        'get_Me', 'get_User',
+    ],
+    ],
+    security: "is_granted('ROLE_USER')"
+)]
+
 #[Patch(
     openapiContext: [
         'description' => 'Update the User ressource of the actual User logged',
@@ -38,7 +65,8 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     normalizationContext: ['groups' => ['get_Me', 'get_User']],
     denormalizationContext: ['groups' => ['set_User', 'set_Own_User']],
-    security: "(is_granted('ROLE_USER') and object == user)"
+    security: "((is_granted('ROLE_USER') and object == user)) or is_granted('ROLE_ADMIN')",
+    processor: UserPasswordHasher::class
 )]
 #[Put(
     openapiContext: [
@@ -58,13 +86,17 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     normalizationContext: ['groups' => ['get_Me', 'get_User']],
     denormalizationContext: ['groups' => ['set_User', 'set_Own_User']],
-    security: "(is_granted('ROLE_USER') and object == user)"
+    security: "((is_granted('ROLE_USER') and object == user)) or is_granted('ROLE_ADMIN')",
+    processor: UserPasswordHasher::class
 )]
 #[Delete(
     openapiContext: [
         'description' => 'Delete your own  User ressource ',
         'summary' => 'Delete your own User ressource ',
         'responses' => [
+            '204' => [
+                'description' => 'Delete complete',
+            ],
             '401' => [
                 'description' => 'You are not logged',
             ],
@@ -73,7 +105,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             ],
         ],
     ],
-    security: "(is_granted('ROLE_USER') and object == user)",
+    security: "((is_granted('ROLE_USER') and object == user)) or is_granted('ROLE_ADMIN')",
 )]
 #[Post(
     openapiContext: [
@@ -85,9 +117,10 @@ use Symfony\Component\Validator\Constraints as Assert;
             ],
         ],
     ],
-
     normalizationContext: ['groups' => ['get_Me', 'get_User']],
-    denormalizationContext: ['groups' => ['set_User']]
+
+    denormalizationContext: ['groups' => ['set_User']],
+    processor: UserPasswordHasher::class
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -114,13 +147,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[Groups(['get_User', 'set_User'])]
-    #[ApiProperty(
-        openapiContext: [
-            'type' => 'array',
-            'example' => "['ROLE_USER','ROLE_ADMIN']",
-        ]
-    )]
     #[ORM\Column]
     private array $roles = [];
 
