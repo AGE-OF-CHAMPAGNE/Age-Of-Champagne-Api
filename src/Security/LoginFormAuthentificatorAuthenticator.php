@@ -74,5 +74,4 @@ class LoginFormAuthentificatorAuthenticator extends AbstractLoginFormAuthenticat
 
         return new RedirectResponse($url);
     }
-
 }

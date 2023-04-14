@@ -46,7 +46,6 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     security: "is_granted('ROLE_USER')"
 )]
-
 #[Patch(
     openapiContext: [
         'description' => 'Update the User ressource of the actual User logged',
