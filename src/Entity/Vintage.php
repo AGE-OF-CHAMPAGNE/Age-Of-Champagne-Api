@@ -3,13 +3,82 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\Controller\GetVintageCardController;
 use App\Repository\VintageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(
+            uriTemplate: '/vintage/{id}',
+            openapiContext: [
+                'summary' => 'Retrieves a Vintage',
+                'description' => 'Retrieves a Vintage',
+                'responses' => [
+                    '200' => [
+                        'description' => 'Vintage',
+                    ],
+                    '404' => [
+                        'description' => 'Vintage not found',
+                    ],
+                ],
+            ],
+            normalizationContext: [
+                'groups' => [
+                    'get_Vintage', 'fetchVintage',
+                ],
+            ],
+        ),
+        new Get(
+            uriTemplate: '/vintage/{id}/card',
+            formats: [
+                'png' => 'image/png',
+            ],
+            controller: GetVintageCardController::class,
+            openapiContext: [
+                'summary' => 'Retrieves a Vintage card',
+                'description' => 'Retrieves a Vintage card',
+                'responses' => [
+                    '200' => [
+                        'description' => 'Vintage card',
+                        'content' => [
+                            'image/png' => [
+                                'schema' => [
+                                    'type' => 'string',
+                                    'format' => 'binary',
+                                ],
+                            ],
+                        ],
+                    ],
+                    '404' => [
+                        'description' => 'Vintage not found',
+                    ],
+                ],
+            ],
+        ),
+        new GetCollection(
+            openapiContext: [
+                'summary' => 'Retrieves a Vintage collection',
+                'description' => 'Retrieves a Vintage collection that contains all the existing Vintage',
+                'responses' => [
+                    '200' => [
+                        'description' => 'All the vintages',
+                    ],
+                ],
+            ],
+            normalizationContext: [
+                'groups' => [
+                    'get_Vintage', 'fetchVintage',
+                ],
+            ],
+        ),
+    ], order: ['city' => 'ASC']
+)]
 #[ORM\Entity(repositoryClass: VintageRepository::class)]
 class Vintage
 {
