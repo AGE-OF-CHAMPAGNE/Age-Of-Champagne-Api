@@ -195,6 +195,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Vintage::class, inversedBy: 'users')]
     private Collection $Vintages;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserBenefit $userBenefit = null;
+
     public function __construct()
     {
         $this->Vintages = new ArrayCollection();
@@ -314,6 +317,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeVintage(Vintage $vintage): self
     {
         $this->Vintages->removeElement($vintage);
+
+        return $this;
+    }
+
+    public function getUserBenefit(): ?UserBenefit
+    {
+        return $this->userBenefit;
+    }
+
+    public function setUserBenefit(UserBenefit $userBenefit): self
+    {
+        // set the owning side of the relation if necessary
+        if ($userBenefit->getUser() !== $this) {
+            $userBenefit->setUser($this);
+        }
+
+        $this->userBenefit = $userBenefit;
 
         return $this;
     }
