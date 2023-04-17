@@ -98,7 +98,6 @@ class Vintage
             'example' => 'Aÿ',
         ]
     )]
-
     private ?string $name = null;
 
     #[Groups(['get_Vintage'])]
@@ -130,7 +129,6 @@ class Vintage
     #[Groups(['get_Vintage'])]
     #[ORM\Column]
     private ?float $size = null;
-
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $card = null;
@@ -175,6 +173,36 @@ class Vintage
     #[Groups(['get_Vintage'])]
     #[ORM\OneToMany(mappedBy: 'vintages', targetEntity: Benefit::class)]
     private Collection $benefits;
+
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'float',
+            'example' => '43.5',
+        ]
+    )]
+    #[Groups(['get_Vintage'])]
+    #[ORM\Column]
+    private ?float $chardonnay = null;
+
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'float',
+            'example' => '43.5',
+        ]
+    )]
+    #[Groups(['get_Vintage'])]
+    #[ORM\Column]
+    private ?float $meunier = null;
+
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'float',
+            'example' => '43.5',
+        ]
+    )]
+    #[Groups(['get_Vintage'])]
+    #[ORM\Column]
+    private ?float $pinot_noir = null;
 
     public function __construct()
     {
@@ -324,6 +352,42 @@ class Vintage
                 $benefit->setVintages(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getChardonnay(): ?float
+    {
+        return $this->chardonnay;
+    }
+
+    public function setChardonnay(float $chardonnay): self
+    {
+        $this->chardonnay = $chardonnay;
+
+        return $this;
+    }
+
+    public function getMeunier(): ?float
+    {
+        return $this->meunier;
+    }
+
+    public function setMeunier(float $meunier): self
+    {
+        $this->meunier = $meunier;
+
+        return $this;
+    }
+
+    public function getPinotNoir(): ?float
+    {
+        return $this->pinot_noir;
+    }
+
+    public function setPinotNoir(float $pinot_noir): self
+    {
+        $this->pinot_noir = $pinot_noir;
 
         return $this;
     }
