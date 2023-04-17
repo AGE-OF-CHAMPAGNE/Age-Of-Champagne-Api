@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -11,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     operations: [
@@ -30,7 +32,7 @@ use Doctrine\ORM\Mapping as ORM;
             ],
             normalizationContext: [
                 'groups' => [
-                    'get_Vintage', 'fetchVintage',
+                    'get_Vintage',
                 ],
             ],
         ),
@@ -73,45 +75,104 @@ use Doctrine\ORM\Mapping as ORM;
             ],
             normalizationContext: [
                 'groups' => [
-                    'get_Vintage', 'fetchVintage',
+                    'get_Vintage',
                 ],
             ],
         ),
-    ], order: ['city' => 'ASC']
+    ], order: ['name' => 'ASC']
 )]
 #[ORM\Entity(repositoryClass: VintageRepository::class)]
 class Vintage
 {
+    #[Groups(['get_Vintage'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['get_Vintage'])]
     #[ORM\Column(length: 255)]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'string',
+            'example' => 'Aÿ',
+        ]
+    )]
+
     private ?string $name = null;
 
+    #[Groups(['get_Vintage'])]
     #[ORM\Column]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'float',
+            'example' => '43.5',
+        ]
+    )]
     private ?float $latitude = null;
 
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'float',
+            'example' => '43.5',
+        ]
+    )]
+    #[Groups(['get_Vintage'])]
     #[ORM\Column]
     private ?float $longitude = null;
 
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'float',
+            'example' => '43.5',
+        ]
+    )]
+    #[Groups(['get_Vintage'])]
     #[ORM\Column]
     private ?float $size = null;
+
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $card = null;
 
+    #[Groups(['get_Vintage'])]
     #[ORM\ManyToOne(inversedBy: 'vintages')]
     #[ORM\JoinColumn(nullable: false)]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'path',
+            'example' => 'api/district/1',
+        ]
+    )]
     private ?District $district = null;
 
+    #[Groups(['get_Vintage'])]
     #[ORM\ManyToOne(inversedBy: 'vintages')]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'array path',
+            'example' => '[
+            "/api/vintages/2",
+            "/api/vintages/4"
+            ]',
+        ]
+    )]
     private ?VintageType $vintage_type = null;
 
+    #[Groups(['get_Vintage'])]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'array path',
+            'example' => '[
+            "/api/user/2",
+            "/api/user/4"
+            ]',
+        ]
+    )]
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'Vintages')]
     private Collection $users;
 
+    #[Groups(['get_Vintage'])]
     #[ORM\OneToMany(mappedBy: 'vintages', targetEntity: Benefit::class)]
     private Collection $benefits;
 
