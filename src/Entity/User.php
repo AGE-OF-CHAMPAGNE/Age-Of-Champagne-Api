@@ -187,8 +187,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         openapiContext: [
             'type' => 'array path',
             'example' => '[
-            "/api/vintages/2",
-            "/api/vintages/4"
+            "/api/vintage/2",
+            "/api/vintage/4"
             ]',
         ]
     )]
