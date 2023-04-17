@@ -2,10 +2,46 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\BenefitRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource(
+    operations: [
+        new Get(
+            uriTemplate: '/benefit/{id}',
+            openapiContext: [
+                'summary' => 'Retrieves a Benefit',
+                'description' => 'Retrieves a Benefit',
+                'responses' => [
+                    '200' => [
+                        'description' => 'Benefit found',
+                    ],
+                    '404' => [
+                        'description' => 'Benefit not found',
+                    ],
+                ],
+            ]
+        ),
+        new GetCollection(
+            openapiContext: [
+                'summary' => 'Retrieves a Benefit collection',
+                'description' => 'Retrieves a Benefit collection',
+                'responses' => [
+                    '200' => [
+                        'description' => 'Benefit collection found',
+                    ],
+                    '404' => [
+                        'description' => 'Benefit collection not found',
+                    ],
+                ],
+            ]
+        ),
+    ]
+)]
 #[ORM\Entity(repositoryClass: BenefitRepository::class)]
 class Benefit
 {
