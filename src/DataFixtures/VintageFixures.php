@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Factory\BenefitFactory;
 use App\Factory\DistrictFactory;
 use App\Factory\VintageFactory;
+use App\Factory\VintageTypeFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -35,7 +36,8 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
             'longitude' => 3.9970886,
             'latitude' => 49.0621668,
             'district' => DistrictFactory::find(['name' => 'Vallé de la marne']),
-            'benefits' => BenefitFactory::randomRange(0, 3),
+            'benefits' => BenefitFactory::randomRange(1, 3),
+            'vintage_type' => VintageTypeFactory::random(),
             ]);
 
         $this->createVintage([
@@ -44,6 +46,8 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
             'longitude' => 3.6940706,
             'latitude' => 48.6571602,
             'district' => DistrictFactory::find(['name' => 'Côte de Sézanne']),
+            'vintage_type' => VintageTypeFactory::random(),
+            'benefits' => BenefitFactory::randomRange(1, 3),
         ]);
         $this->createVintage([
             'name' => 'Bassuet',
@@ -51,6 +55,8 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
             'longitude' => 4.6691036,
             'latitude' => 48.7987163,
             'district' => DistrictFactory::find(['name' => 'Côteaux Vitryats']),
+            'vintage_type' => VintageTypeFactory::random(),
+            'benefits' => BenefitFactory::randomRange(1, 3),
         ]);
         $this->createVintage([
             'name' => 'Baroville',
@@ -58,6 +64,8 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
             'longitude' => 4.7240572,
             'latitude' => 48.1925484,
             'district' => DistrictFactory::find(['name' => 'Côte des Bar']),
+            'vintage_type' => VintageTypeFactory::random(),
+            'benefits' => BenefitFactory::randomRange(1, 3),
         ]);
         $this->createVintage([
             'name' => 'Chamery',
@@ -65,6 +73,8 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
             'longitude' => 3.9667,
             'latitude' => 49.1667,
             'district' => DistrictFactory::find(['name' => 'Montagne de Reims']),
+            'vintage_type' => VintageTypeFactory::random(),
+            'benefits' => BenefitFactory::randomRange(1, 3),
         ]);
 
         $manager->flush();
@@ -74,6 +84,7 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            DistrictFixtures::class,
         ];
     }
 }
