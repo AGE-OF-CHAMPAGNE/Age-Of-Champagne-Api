@@ -195,9 +195,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Vintage::class, inversedBy: 'users')]
     private Collection $Vintages;
 
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'bool',
+            'example' => 'true',
+        ]
+    )]
+    #[Groups(['get_User', 'set_User'])]
+    #[ORM\Column]
+    private ?bool $wantSeeDYK = null;
+
+    #[ApiProperty()]
+    #[Groups(['get_User', 'set_User'])]
+    #[ORM\ManyToMany(targetEntity: DidYouKnow::class)]
+    private Collection $DYKs;
+
     public function __construct()
     {
         $this->Vintages = new ArrayCollection();
+        $this->DYKs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -314,6 +330,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeVintage(Vintage $vintage): self
     {
         $this->Vintages->removeElement($vintage);
+
+        return $this;
+    }
+
+    public function isWantSeeDYK(): ?bool
+    {
+        return $this->wantSeeDYK;
+    }
+
+    public function setWantSeeDYK(bool $wantSeeDYK): self
+    {
+        $this->wantSeeDYK = $wantSeeDYK;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DidYouKnow>
+     */
+    public function getDYKs(): Collection
+    {
+        return $this->DYKs;
+    }
+
+    public function addDYK(DidYouKnow $dYK): self
+    {
+        if (!$this->DYKs->contains($dYK)) {
+            $this->DYKs->add($dYK);
+        }
+
+        return $this;
+    }
+
+    public function removeDYK(DidYouKnow $dYK): self
+    {
+        $this->DYKs->removeElement($dYK);
 
         return $this;
     }
