@@ -210,10 +210,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: DidYouKnow::class)]
     private Collection $DYKs;
 
+    #[Groups(['get_User', 'set_User'])]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'array path',
+            'example' => '[
+            "/api/vintage/2",
+            "/api/vintage/4"
+            ]',
+        ]
+    )]
+    #[ORM\ManyToMany(targetEntity: Benefit::class, inversedBy: 'users')]
+    private Collection $used_benefit;
+
+    #[Groups(['get_User', 'set_User'])]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'json',
+            'example' => '{
+             { benefit_id: 1,
+               date: "21/12/2023"
+             } 
+            }',
+        ]
+    )]
+    #[ORM\Column(nullable: true)]
+    private array $used_benefit_date = [];
+
     public function __construct()
     {
         $this->Vintages = new ArrayCollection();
         $this->DYKs = new ArrayCollection();
+        $this->used_benefit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -366,6 +394,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeDYK(DidYouKnow $dYK): self
     {
         $this->DYKs->removeElement($dYK);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Benefit>
+     */
+    public function getUsedBenefit(): Collection
+    {
+        return $this->used_benefit;
+    }
+
+    public function addUsedBenefit(Benefit $usedBenefit): self
+    {
+        if (!$this->used_benefit->contains($usedBenefit)) {
+            $this->used_benefit->add($usedBenefit);
+        }
+
+        return $this;
+    }
+
+    public function removeUsedBenefit(Benefit $usedBenefit): self
+    {
+        $this->used_benefit->removeElement($usedBenefit);
+
+        return $this;
+    }
+
+    public function getUsedBenefitDate(): array
+    {
+        return $this->used_benefit_date;
+    }
+
+    public function setUsedBenefitDate(?array $used_benefit_date): self
+    {
+        $this->used_benefit_date = $used_benefit_date;
 
         return $this;
     }
