@@ -65,6 +65,9 @@ class Benefit
     #[ORM\ManyToOne(inversedBy: 'benefits')]
     private ?Vintage $vintages = null;
 
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +129,18 @@ class Benefit
     public function setVintages(?Vintage $vintages): self
     {
         $this->vintages = $vintages;
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
