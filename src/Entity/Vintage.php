@@ -204,10 +204,14 @@ class Vintage
     #[ORM\Column]
     private ?float $pinot_noir = null;
 
+    #[ORM\ManyToMany(targetEntity: Recipient::class, inversedBy: 'vintages')]
+    private Collection $recipient;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->benefits = new ArrayCollection();
+        $this->recipient = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -388,6 +392,30 @@ class Vintage
     public function setPinotNoir(float $pinot_noir): self
     {
         $this->pinot_noir = $pinot_noir;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recipient>
+     */
+    public function getRecipient(): Collection
+    {
+        return $this->recipient;
+    }
+
+    public function addRecipient(Recipient $recipient): self
+    {
+        if (!$this->recipient->contains($recipient)) {
+            $this->recipient->add($recipient);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipient(Recipient $recipient): self
+    {
+        $this->recipient->removeElement($recipient);
 
         return $this;
     }

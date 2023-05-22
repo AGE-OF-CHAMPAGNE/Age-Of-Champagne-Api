@@ -49,6 +49,7 @@ final class BenefitFactory extends ModelFactory
         return [
             'description' => self::faker()->text(),
             'title' => self::faker()->text(10),
+            'recipient' => RecipientFactory::random(),
         ];
     }
 
