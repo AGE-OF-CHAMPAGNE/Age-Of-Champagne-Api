@@ -73,6 +73,9 @@ class Benefit
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'used_benefit')]
     private Collection $users;
 
+    #[ORM\ManyToOne(inversedBy: 'benefits')]
+    private ?Recipient $recipient = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -178,6 +181,18 @@ class Benefit
         if ($this->users->removeElement($user)) {
             $user->removeUsedBenefit($this);
         }
+
+        return $this;
+    }
+
+    public function getRecipient(): ?Recipient
+    {
+        return $this->recipient;
+    }
+
+    public function setRecipient(?Recipient $recipient): self
+    {
+        $this->recipient = $recipient;
 
         return $this;
     }

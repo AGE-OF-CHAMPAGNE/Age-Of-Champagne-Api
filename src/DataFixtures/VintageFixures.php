@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Factory\BenefitFactory;
 use App\Factory\DistrictFactory;
+use App\Factory\RecipientFactory;
 use App\Factory\VintageFactory;
 use App\Factory\VintageTypeFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -18,6 +19,7 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
         $users = ['user1', 'user2', 'user3', 'user4', 'user5'];
         $rand = random_int(0, 4);
         $usersRD = [];
+        $recip = [];
         $i = 0;
         while ($i <= $rand + 1 and sizeof($usersRD) != $rand) {
             $user = $users[random_int(0, $rand)];
@@ -25,8 +27,16 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
                 $arrayRD[] = $user;
                 $v->addUser($this->getReference($user));
             }
+            $reci = RecipientFactory::random()->object();
+            if (!in_array($reci, $recip)) {
+                $recip[] = $reci;
+                $v->addRecipient($reci);
+            }
+
             ++$i;
         }
+
+        return $v;
     }
 
     public function load(ObjectManager $manager): void
@@ -100,6 +110,7 @@ class VintageFixures extends Fixture implements DependentFixtureInterface
         return [
             UserFixtures::class,
             DistrictFixtures::class,
+            RecipientFixtures::class,
         ];
     }
 }
