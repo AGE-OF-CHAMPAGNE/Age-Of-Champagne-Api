@@ -29,8 +29,8 @@ class BenefitCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id', 'Identifiant')->onlyOnIndex(),
-            TextField::new('title', 'Titre')->setHelp("Titre de l'avantage (max 255 caratères"),
-            TextEditorField::new('description', 'Description')->setHelp("Description de l'avantage (Pas de limite)"),
+            TextField::new('title', 'Titre')->setHelp("Titre de l'avantage (max 255 caratères)"),
+            TextField::new('description', 'Description')->setHelp("Description de l'avantage (Pas de limite)"),
             AssociationField::new('vintages', 'Cru'),
             AssociationField::new('recipient', 'Partenaire'),
             DateField::new('startDate', 'Date de début'),
