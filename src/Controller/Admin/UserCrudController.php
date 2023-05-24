@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Benefit;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -37,8 +38,10 @@ class UserCrudController extends AbstractCrudController
             TextField::new('firstName', 'Prénom'),
             TextField::new('lastName', 'Nom de famille'),
             BooleanField::new('wantSeeDYK', 'Affichage des pop-up'),
-            AssociationField::new('Vintages')
+            AssociationField::new('Vintages','Crus')
                 ->setFormTypeOption('choice_label', 'name'),
+            AssociationField::new('used_benefit','Avantages utilisés')
+            ->setFormTypeOption('choice_label','id')
         ];
     }
 }
