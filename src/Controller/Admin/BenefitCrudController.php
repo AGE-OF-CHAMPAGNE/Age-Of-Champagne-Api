@@ -20,7 +20,7 @@ class BenefitCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setPageTitle('index', 'Avantage')
+            ->setPageTitle('index', 'Avantages')
             ->setEntityLabelInSingular('un Avantage');
     }
 

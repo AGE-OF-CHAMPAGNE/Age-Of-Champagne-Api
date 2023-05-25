@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Benefit;
+use App\Entity\DidYouKnow;
 use App\Entity\User;
 use App\Entity\Vintage;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,6 +44,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard("Page d'acceuil", 'fa fa-home');
         yield MenuItem::section('Crus', 'fa fa-wine-bottle');
         yield MenuItem::linkToCrud('Liste des Crus', 'fa fa-list', Vintage::class);
+
+        yield MenuItem::section('Le saviez vous ?', 'fa-solid fa-question');
+        yield MenuItem::linkToCrud('Liste des Le saviez vous', 'fa fa-list', DidYouKnow::class);
+        yield MenuItem::linkToCrud('Ajouter un Le saviez vous', 'fa fa-plus', DidYouKnow::class)
+            ->setAction('new');
 
         yield MenuItem::section('Utilisateurs', 'fa fa-user');
         yield MenuItem::linkToCrud('Liste des Utilisateurs', 'fa fa-list', User::class);

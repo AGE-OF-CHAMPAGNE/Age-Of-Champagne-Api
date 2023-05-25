@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Vintage;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -14,6 +15,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class VintageCrudController extends AbstractCrudController
 {
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setPageTitle('index', 'Crus')
+            ->setEntityLabelInSingular('un cru');
+    }
+
     public static function getEntityFqcn(): string
     {
         return Vintage::class;
