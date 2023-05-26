@@ -6,6 +6,7 @@ use App\Entity\Benefit;
 use App\Entity\DidYouKnow;
 use App\Entity\District;
 use App\Entity\Manager;
+use App\Entity\Recipient;
 use App\Entity\User;
 use App\Entity\Vintage;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,6 +51,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Le saviez vous ?', 'fa-solid fa-question');
         yield MenuItem::linkToCrud('Liste des Le saviez vous', 'fa fa-list', DidYouKnow::class);
         yield MenuItem::linkToCrud('Ajouter un Le saviez vous', 'fa fa-plus', DidYouKnow::class)
+            ->setAction('new');
+
+        yield MenuItem::section('Partenaires', 'fa-solid fa-handshake');
+        yield MenuItem::linkToCrud('Liste des Partenaires', 'fa fa-list', Recipient::class);
+        yield MenuItem::linkToCrud('Ajouter un Partenaire', 'fa fa-plus', Recipient::class)
             ->setAction('new');
 
         yield MenuItem::section('Responsables', 'fa-solid fa-people-roof');
