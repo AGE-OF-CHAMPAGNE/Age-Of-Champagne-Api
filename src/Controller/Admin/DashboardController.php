@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Benefit;
 use App\Entity\DidYouKnow;
 use App\Entity\District;
+use App\Entity\Manager;
 use App\Entity\User;
 use App\Entity\Vintage;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,6 +52,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Ajouter un Le saviez vous', 'fa fa-plus', DidYouKnow::class)
             ->setAction('new');
 
+        yield MenuItem::section('Responsables', 'fa-solid fa-people-roof');
+        yield MenuItem::linkToCrud('Liste des Responsables', 'fa fa-list', Manager::class);
+        yield MenuItem::linkToCrud('Ajouter un Responsable', 'fa fa-plus', Manager::class)
+            ->setAction('new');
+
         yield MenuItem::section('Régions', 'fa-sharp fa-solid fa-location-dot');
         yield MenuItem::linkToCrud('Liste des Régionss', 'fa fa-list', District::class);
         yield MenuItem::linkToCrud('Ajouter une Région', 'fa fa-plus', District::class)
@@ -60,6 +66,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Liste des Utilisateurs', 'fa fa-list', User::class);
         yield MenuItem::linkToCrud('Ajouter un Utilisateur', 'fa fa-plus', User::class)
             ->setAction('new');
+
         yield MenuItem::section('Avantages', 'fa fa-tags');
         yield MenuItem::linkToCrud('Liste des Avantages', 'fa fa-list', Benefit::class);
         yield MenuItem::linkToCrud('Ajouter un Avantage', 'fa fa-plus', Benefit::class)
