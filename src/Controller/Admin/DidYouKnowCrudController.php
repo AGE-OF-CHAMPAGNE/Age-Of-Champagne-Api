@@ -25,8 +25,8 @@ class DidYouKnowCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id', 'Identifiant'),
-            TextField::new('description'),
+            IdField::new('id', 'Identifiant')->onlyOnIndex(),
+            TextField::new('description','Description'),
         ];
     }
 }
