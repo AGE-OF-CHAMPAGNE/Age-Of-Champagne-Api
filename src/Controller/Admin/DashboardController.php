@@ -9,6 +9,7 @@ use App\Entity\Manager;
 use App\Entity\Recipient;
 use App\Entity\User;
 use App\Entity\Vintage;
+use App\Entity\VintageType;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -45,8 +46,14 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard("Page d'acceuil", 'fa fa-home');
+
         yield MenuItem::section('Crus', 'fa fa-wine-bottle');
         yield MenuItem::linkToCrud('Liste des Crus', 'fa fa-list', Vintage::class);
+
+        yield MenuItem::section('Types de Cru', 'fa-solid fa-droplet');
+        yield MenuItem::linkToCrud('Liste des Types de Cru', 'fa fa-list', VintageType::class);
+        yield MenuItem::linkToCrud('Ajouter un Type de Cru', 'fa fa-plus', VintageType::class)
+            ->setAction('new');
 
         yield MenuItem::section('Le saviez vous ?', 'fa-solid fa-question');
         yield MenuItem::linkToCrud('Liste des Le saviez vous', 'fa fa-list', DidYouKnow::class);
