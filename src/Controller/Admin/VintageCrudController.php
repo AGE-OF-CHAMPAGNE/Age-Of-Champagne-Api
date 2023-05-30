@@ -10,8 +10,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class VintageCrudController extends AbstractCrudController
 {
@@ -48,6 +50,9 @@ class VintageCrudController extends AbstractCrudController
             NumberField::new('chardonnay', 'Chardonnay')->setHelp('en %'),
             NumberField::new('meunier', 'Meunier')->setHelp('en %'),
             NumberField::new('pinot_noir', 'Pinot noir')->setHelp('en %'),
+            TextField::new('card')->setFormType(VichImageType::class)->onlyOnForms(),
+            ImageField::new('cardName')->setBasePath('images/card')->onlyOnIndex(),
+
         ];
     }
 }

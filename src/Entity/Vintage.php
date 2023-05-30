@@ -10,9 +10,10 @@ use App\Controller\GetVintageCardController;
 use App\Repository\VintageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ApiResource(
     operations: [
@@ -81,6 +82,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ),
     ], order: ['name' => 'ASC']
 )]
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: VintageRepository::class)]
 class Vintage
 {
@@ -130,8 +132,14 @@ class Vintage
     #[ORM\Column]
     private ?float $size = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $card = null;
+    #[Vich\UploadableField(mapping: 'vintage', fileNameProperty: 'cardName', size: 'cardSize')]
+    private ?File $card = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $cardName = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $cardSize = null;
 
     #[Groups(['get_Vintage'])]
     #[ORM\ManyToOne(inversedBy: 'vintages')]
@@ -267,16 +275,34 @@ class Vintage
         return $this;
     }
 
-    public function getCard()
+    public function getCard(): ?File
     {
         return $this->card;
     }
 
-    public function setCard($card): self
+    public function setCard(?File $card): void
     {
         $this->card = $card;
+    }
 
-        return $this;
+    public function getCardName(): ?string
+    {
+        return $this->cardName;
+    }
+
+    public function setCardName(?string $cardName): void
+    {
+        $this->cardName = $cardName;
+    }
+
+    public function getCardSize(): ?int
+    {
+        return $this->cardSize;
+    }
+
+    public function setCardSize(?int $cardSize): void
+    {
+        $this->cardSize = $cardSize;
     }
 
     public function getDistrict(): ?District
