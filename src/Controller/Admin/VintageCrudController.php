@@ -13,7 +13,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
 class VintageCrudController extends AbstractCrudController
 {
@@ -29,11 +31,6 @@ class VintageCrudController extends AbstractCrudController
         return Vintage::class;
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions->disable(Action::DELETE);
-    }
-
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -42,6 +39,7 @@ class VintageCrudController extends AbstractCrudController
             NumberField::new('longitude', 'Longitude'),
             NumberField::new('latitude', 'Latitude'),
             NumberField::new('size', 'Taille (en HA)'),
+            AssociationField::new('district','Région'),
             AssociationField::new('benefits', 'Avantages')
                 ->setFormTypeOption('choice_label', 'title'),
             AssociationField::new('recipient', 'Partenaires')
@@ -50,7 +48,7 @@ class VintageCrudController extends AbstractCrudController
             NumberField::new('chardonnay', 'Chardonnay')->setHelp('en %'),
             NumberField::new('meunier', 'Meunier')->setHelp('en %'),
             NumberField::new('pinot_noir', 'Pinot noir')->setHelp('en %'),
-            TextField::new('card')->setFormType(VichImageType::class)->onlyOnForms(),
+            TextField::new('cardShow', 'Carte')->setFormType(VichFileType::class)->onlyWhenCreating(),
             ImageField::new('cardName')->setBasePath('images/card')->onlyOnIndex(),
 
         ];

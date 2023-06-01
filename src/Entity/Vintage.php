@@ -10,6 +10,7 @@ use App\Controller\GetVintageCardController;
 use App\Repository\VintageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -133,6 +134,9 @@ class Vintage
     private ?float $size = null;
 
     #[Vich\UploadableField(mapping: 'vintage', fileNameProperty: 'cardName', size: 'cardSize')]
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $cardShow = null;
+
     private ?File $card = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -235,6 +239,18 @@ class Vintage
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCardShow()
+    {
+        return $this->cardShow;
+    }
+
+    public function setCardShow($cardShow): self
+    {
+        $this->cardShow = file_get_contents(stream_get_contents($cardShow));
 
         return $this;
     }

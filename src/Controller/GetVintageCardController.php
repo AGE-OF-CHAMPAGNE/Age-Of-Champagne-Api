@@ -10,7 +10,7 @@ class GetVintageCardController extends AbstractController
 {
     public function __invoke(Vintage $data): Response
     {
-        $response = new Response(stream_get_contents($data->getCard(), -1, 0));
+        $response = new Response($data->getCardShow(), -1, 0);
         $response->headers->set('Content-Type', 'image/png');
 
         return $response;
