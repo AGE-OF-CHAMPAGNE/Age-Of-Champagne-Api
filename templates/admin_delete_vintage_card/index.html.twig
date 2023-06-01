@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminDeleteVintageCardController!{% endblock %}
+
+{% block body %}
+    Est vous sur ?
+    <button type="submit" onclick=window.location="{{ path('app_admin_delete_vintage_card',{id: id}) }}">test</button>
+{% endblock %}

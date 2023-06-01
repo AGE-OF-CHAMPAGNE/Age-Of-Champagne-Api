@@ -24,16 +24,16 @@ class ManagerCrudController extends AbstractCrudController
             ->setPageTitle('index', 'Responsables')
             ->setEntityLabelInSingular('un Responsable');
     }
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id','Identifiant')->onlyOnIndex(),
-            TextField::new('firstName','Prénom'),
-            TextField::new('lastname','Nom'),
-            TelephoneField::new('phonenumber','Numéro de téléphone'),
-            EmailField::new('email','Email'),
-            AssociationField::new('recipient','Partenaire')
+            IdField::new('id', 'Identifiant')->onlyOnIndex(),
+            TextField::new('firstName', 'Prénom'),
+            TextField::new('lastname', 'Nom'),
+            TelephoneField::new('phonenumber', 'Numéro de téléphone'),
+            EmailField::new('email', 'Email'),
+            AssociationField::new('recipient', 'Partenaire'),
         ];
     }
-
 }

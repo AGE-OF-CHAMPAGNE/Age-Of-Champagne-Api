@@ -26,7 +26,7 @@ class DidYouKnowCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id', 'Identifiant')->onlyOnIndex(),
-            TextField::new('description','Description'),
+            TextField::new('description', 'Description'),
         ];
     }
 }

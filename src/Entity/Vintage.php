@@ -10,7 +10,6 @@ use App\Controller\GetVintageCardController;
 use App\Repository\VintageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -130,8 +129,8 @@ class Vintage
     #[ORM\Column]
     private ?float $size = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $card = null;
+    #[ORM\Column(length: 100000, nullable: true)]
+    private ?string $card = null;
 
     #[Groups(['get_Vintage'])]
     #[ORM\ManyToOne(inversedBy: 'vintages')]

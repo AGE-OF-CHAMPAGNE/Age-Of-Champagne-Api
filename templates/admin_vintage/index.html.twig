@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block javascripts %}
+    <script src="https://kit.fontawesome.com/268d478da9.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+
+        html{
+            background-color: #222222;
+            height: 100%;
+            width: 100%;
+            color: white;
+
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+
+        i {
+            margin-right: 10px;
+            color: rgb(115, 115, 115);
+            height: 18px;
+            font-size: 16px !important;
+        }
+
+
+        .sidebar {
+            width:210px;
+            background-color: rgb(48,48,48);
+            padding-right: 10px;
+            padding-left: 10px;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            height: 24px;
+            width: 204px;
+            padding-top: 17px;
+            padding-bottom: 28px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            font-family: "Segoe UI Semibold", serif;
+        }
+
+        .sidebar-elmt {
+            text-decoration: 0;
+            color: #b5b5b5;
+            padding-right: 6px;
+            padding-left: 5px;
+            font-family: "Segoe UI", serif;
+            font-size: 14px;
+            height: 29px;
+        }
+
+        .main-content {
+            font-family: "Segoe UI", serif;
+        }
+
+        .vintage {
+
+            display: flex;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="sidebar">
+        <span class="sidebar-title">
+            <div>Panneau d'administration</div>
+        </span>
+        <a class="sidebar-elmt" href="{{ path('admin') }}">
+            <i class="fa-solid fa-house"></i>
+            Page d'acceuil
+        </a>
+
+    </div>
+
+    <div class="main-content">
+        <h1>
+            Images des Crus
+        </h1>
+        <table>
+            <thead>
+                <th>Identifiant</th>
+                <th>Nom</th>
+            </thead>
+            {% for vintage in vintages %}
+                <div class="vintage">
+                    <tr>
+                        <th class="id">{{ vintage.id }}</th>
+                        <th class="name">{{ vintage.name }}</th>
+                        <th class="img">{{ render(path('app_image',{id : vintage.id}  )) }}</th>
+                        {% if vintage.card != null %}
+                        <th><button type="" onclick=window.location="{{ path('app_admin_delete_vintage_card',{id: vintage.id}) }}">Delete</button></th>
+                        {% endif %}
+                        <th></th>
+                    </tr>
+                </div>
+            {% endfor %}
+        </table>
+
+    </div>
+{% endblock %}
