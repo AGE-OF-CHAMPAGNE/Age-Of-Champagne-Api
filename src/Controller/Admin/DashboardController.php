@@ -49,6 +49,9 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Crus', 'fa fa-wine-bottle');
         yield MenuItem::linkToCrud('Liste des Crus', 'fa fa-list', Vintage::class);
+        yield MenuItem::linkToCrud('Ajouter un Type de Cru', 'fa fa-plus', Vintage::class)
+            ->setAction('new');
+        yield MenuItem::linkToRoute('Ajouter un image au Crus', 'fa fa-image', 'app_admin_vintage');
 
         yield MenuItem::section('Types de Cru', 'fa-solid fa-droplet');
         yield MenuItem::linkToCrud('Liste des Types de Cru', 'fa fa-list', VintageType::class);

@@ -19,22 +19,21 @@ class DistrictCrudController extends AbstractCrudController
             ->setPageTitle('index', 'Régions')
             ->setEntityLabelInSingular('une Région');
     }
+
     public static function getEntityFqcn(): string
     {
         return District::class;
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id','Identifiant')->onlyOnIndex(),
-            TextField::new('name','Nom'),
-            NumberField::new('size','Taille (en HA)'),
-            ColorField::new('color_code','Code couleur'),
+            IdField::new('id', 'Identifiant')->onlyOnIndex(),
+            TextField::new('name', 'Nom'),
+            NumberField::new('size', 'Taille (en HA)'),
+            ColorField::new('color_code', 'Code couleur'),
             AssociationField::new('vintages', 'Crus')
                 ->setFormTypeOption('choice_label', 'name'),
         ];
     }
-
 }
