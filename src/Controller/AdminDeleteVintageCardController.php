@@ -11,14 +11,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminDeleteVintageCardController extends AbstractController
 {
     #[Route('/admin/vintage/deleteCard/{id}/', name: 'app_admin_delete_vintage_card')]
-    public function index(Vintage $vintage, VintageRepository $vintageRepository): Response
+    public function index(Vintage $vintage): Response
     {
-        if (null == $vintage->getCard()) {
-            return $this->redirectToRoute('app_admin_vintage');
-        }
+        return $this->render('admin_delete_vintage_card/index.html.twig', ['id' => $vintage->getId()]);
+    }
+
+    #[Route('/admin/vintage/deleteCard/{id}/delete', name: 'app_admin_delete_vintage_card_delete')]
+    public function delete(Vintage $vintage, VintageRepository $vintageRepository)
+    {
         $vintage->setCard(null);
         $vintageRepository->save($vintage, true);
 
-        return $this->render('admin_delete_vintage_card/index.html.twig', ['id' => $vintage->getId()]);
+        return $this->redirectToRoute('app_admin_vintage');
     }
 }
