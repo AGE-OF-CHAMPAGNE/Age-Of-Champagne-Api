@@ -1,42 +1,84 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
-
+{% block title %}Inscription{% endblock %}
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<div class="container reg pt-3 d-flex flex-column align-items-center">
+    <h1 class="title display-6">Connexion</h1>
+    <div class="logo">
+        <img src="./img/logo/Subtract.png" alt="AOC" />
+        <img
+            class="circle"
+            src="./img/logo/Intersect.png"
+            alt="circle"
+        />
+    </div>  
+    <form class="form" method="post" >
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+            {% if app.user %}
+                <div class="alert alert-warning">
+                    Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                </div>
+            {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
+            <label class="label" for="inputEmail">
+                Email
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="input" autocomplete="email" required autofocus>
             </label>
-        </div>
-    #}
+            <label class="label" for="inputPassword">
+                Password
+                <input type="password" name="password" id="inputPassword" class="input" autocomplete="current-password" required>
+                <button
+                    type="button"
+                    onclick="togglePasswordVisibility()"
+                >
+                <img id="toggleIcon" class="icon" src="./img/icons/ph_eye-closed.png" alt="eye" />
+              </button>
+            </label>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+            <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            >
+
+            {#
+                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                See https://symfony.com/doc/current/security/remember_me.html
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Remember me
+                    </label>
+                </div>
+            #}
+
+            <button class="button" type="submit">
+                SE CONNECTER
+            </button>
+    </form>
+    <a class="text-white" href="http://localhost:5173/signup">
+        S'inscrire
+    </a>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('inputPassword');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.src = './img/icons/ic_sharp-remove-red-eye.png';
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.src = './img/icons/ph_eye-closed.png';
+        }
+    }
+</script>
+
 {% endblock %}
