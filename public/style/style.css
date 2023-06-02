@@ -100,3 +100,22 @@ button {
   bottom: 5px;
   opacity: 0.5;
 }
+.navbar {
+  position: fixed;
+  z-index: 999;
+  bottom: 0;
+  width: 100%;
+  height: 44px;
+  background-color: #1D1D1D;
+}
+.links {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+.item {
+  position: relative;
+}
