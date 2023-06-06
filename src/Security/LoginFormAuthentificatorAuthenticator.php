@@ -42,8 +42,17 @@ class LoginFormAuthentificatorAuthenticator extends AbstractLoginFormAuthenticat
         );
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): Response
     {
+        if (isset(parse_url(urldecode($request->getUri()))['query'])) {
+            $params = parse_url(urldecode($request->getUri()))['query'];
+            parse_str($params, $redirect);
+
+            if (null != $redirect['redirect'] && '' != $redirect['redirect']) {
+                return new RedirectResponse($redirect['redirect']);
+            }
+        }
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
