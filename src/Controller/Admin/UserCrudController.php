@@ -43,7 +43,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('firstName', 'Prénom'),
             TextField::new('lastName', 'Nom de famille'),
             BooleanField::new('wantSeeDYK', 'Affichage des pop-up'),
-            AssociationField::new('Vintages', 'Crus')
+            AssociationField::new('Vintages', 'Cru(s) déjà scanné(s)')
                 ->setFormTypeOption('choice_label', 'name'),
             AssociationField::new('used_benefit', 'Avantages utilisés')
             ->setFormTypeOption('choice_label', 'id'),

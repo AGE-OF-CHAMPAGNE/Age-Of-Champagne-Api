@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class AdminVintageController extends AbstractController
 {
     #[Route('/admin/vintage', name: 'app_admin_vintage')]
