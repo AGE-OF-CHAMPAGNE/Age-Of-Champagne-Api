@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminRecipientController!{% endblock %}
+
+{% block body %}
+<div class="main-content">
+    <h1>
+        Images des Crus
+    </h1>
+    <table>
+        <thead>
+        <th>Identifiant</th>
+        <th>Nom</th>
+        </thead>
+        {% for recipient in recipients %}
+            <div class="recipient">
+                <tr>
+                    <th class="id">{{ recipient.id }}</th>
+                    <th class="name">{{ recipient.name }}</th>
+                    <th class="img">{{ render(path('app_image',{id : recipient.id}  )) }}</th>
+                    {% if recipient.card != null %}
+                        <th><button type="" onclick=window.location="{{ path('app_admin_delete_vintage_card',{id: recipient.id}) }}">Delete</button></th>
+                    {% endif %}
+                    <th></th>
+                </tr>
+            </div>
+        {% endfor %}
+    </table>
+{% endblock %}

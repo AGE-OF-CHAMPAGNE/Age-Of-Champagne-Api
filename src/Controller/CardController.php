@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ImageController extends AbstractController
+class CardController extends AbstractController
 {
     #[Route('/image/{id}', name: 'app_image', requirements: ['id' => '\d+'])]
     public function show(Vintage $vintage): Response
