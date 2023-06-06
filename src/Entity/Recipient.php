@@ -48,6 +48,15 @@ class Recipient
     #[ORM\ManyToMany(targetEntity: Vintage::class, mappedBy: 'recipient')]
     private Collection $vintages;
 
+    #[ORM\Column(nullable: true)]
+    private array $image = [
+        ['id' => 0, 'base64' => ''],
+        ['id' => 1, 'base64' => ''],
+        ['id' => 2, 'base64' => ''],
+        ['id' => 3, 'base64' => ''],
+        ['id' => 4, 'base64' => ''],
+    ];
+
     public function __construct()
     {
         $this->benefits = new ArrayCollection();
@@ -215,5 +224,17 @@ class Recipient
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getImage(): array
+    {
+        return $this->image;
+    }
+
+    public function setImage(?array $image): self
+    {
+        $this->image = $image;
+
+        return $this;
     }
 }
