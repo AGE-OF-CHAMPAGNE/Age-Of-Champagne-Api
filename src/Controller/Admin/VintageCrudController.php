@@ -3,8 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Vintage;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -27,11 +25,6 @@ class VintageCrudController extends AbstractCrudController
         return Vintage::class;
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions->disable(Action::DELETE);
-    }
-
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -39,12 +32,13 @@ class VintageCrudController extends AbstractCrudController
             TextField::new('name', 'Nom'),
             NumberField::new('longitude', 'Longitude'),
             NumberField::new('latitude', 'Latitude'),
-            NumberField::new('size', 'Taille (en HA)'),
+            NumberField::new('size', 'Superficie (en ha)'),
             AssociationField::new('benefits', 'Avantages')
                 ->setFormTypeOption('choice_label', 'title'),
             AssociationField::new('recipient', 'Partenaires')
                 ->setFormTypeOption('choice_label', 'name'),
-            FormField::addPanel('Sépages'),
+            FormField::addPanel('Cépages'),
+            AssociationField::new('vintage_type', 'Type de Cru'),
             NumberField::new('chardonnay', 'Chardonnay')->setHelp('en %'),
             NumberField::new('meunier', 'Meunier')->setHelp('en %'),
             NumberField::new('pinot_noir', 'Pinot noir')->setHelp('en %'),

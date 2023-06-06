@@ -27,8 +27,8 @@ class VintageTypeCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id', 'Identifiant')->onlyOnIndex(),
-            TextField::new('name'),
-            AssociationField::new('vintages')
+            TextField::new('name','Nom'),
+            AssociationField::new('vintages','Cru(s)')
             ->setFormTypeOption('choice_label', 'name'),
         ];
     }
