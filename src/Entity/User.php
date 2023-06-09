@@ -237,6 +237,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private array $used_benefit_date = [];
 
+    #[ORM\OneToOne(inversedBy: 'recipientUser', cascade: ['persist', 'remove'])]
+    private ?Manager $manager = null;
+
     public function __construct()
     {
         $this->Vintages = new ArrayCollection();
@@ -437,5 +440,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return "{$this->getFirstname()} {$this->getLastname()}";
+    }
+
+    public function getManager(): ?Manager
+    {
+        return $this->manager;
+    }
+
+    public function setManager(?Manager $manager): self
+    {
+        $this->manager = $manager;
+
+        return $this;
     }
 }

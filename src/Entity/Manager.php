@@ -30,6 +30,9 @@ class Manager
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Recipient $recipient = null;
 
+    #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
+    private ?User $recipientUser = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +94,28 @@ class Manager
     public function setRecipient(?Recipient $recipient): self
     {
         $this->recipient = $recipient;
+
+        return $this;
+    }
+
+    public function getRecipientUser(): ?User
+    {
+        return $this->recipientUser;
+    }
+
+    public function setRecipientUser(?User $recipientUser): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($recipientUser === null && $this->recipientUser !== null) {
+            $this->recipientUser->setManager(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($recipientUser !== null && $recipientUser->getManager() !== $this) {
+            $recipientUser->setManager($this);
+        }
+
+        $this->recipientUser = $recipientUser;
 
         return $this;
     }

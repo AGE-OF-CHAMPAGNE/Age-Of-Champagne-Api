@@ -47,6 +47,8 @@ class UserCrudController extends AbstractCrudController
                 ->setFormTypeOption('choice_label', 'name'),
             AssociationField::new('used_benefit', 'Avantages utilisés')
             ->setFormTypeOption('choice_label', 'id'),
+            AssociationField::new('manager', 'Est Manager ?')
+            ->setFormTypeOption('choice_label', 'LastName'),
         ];
     }
 }
