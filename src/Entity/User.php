@@ -237,6 +237,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private array $used_benefit_date = [];
 
+
+    #[ApiProperty()]
+    #[Groups(['get_User', 'set_User'])]
     #[ORM\OneToOne(inversedBy: 'recipientUser', cascade: ['persist', 'remove'])]
     private ?Manager $manager = null;
 
