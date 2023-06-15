@@ -1,9 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello AdminDeleteVintageCardController!{% endblock %}
-
+{% block stylesheets %}
+    <style>
+        .wrapper {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+{% endblock %}
 {% block body %}
-    Est vous sur ?
-    <button type="submit" onclick=window.location="{{ path('app_admin_delete_vintage_card_delete',{id: id}) }}">OUI</button>
-    <button type="submit" onclick=window.location="{{ path('app_admin_vintage') }}">Non</button>
+<div class="container wrapper">
+<div class="alert alert-primary" role="alert">
+    Êtes-vous sûr ?
+    <button type="submit" class="btn btn-primary" onclick=window.location="{{ path('app_admin_delete_vintage_card_delete',{id: id}) }}">Oui</button>
+    <button type="submit" class="btn btn-danger" onclick=window.location="{{ path('app_admin_vintage') }}">Non</button>
+</div>
+</div>
+
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% if image == null %}
 
-    <button onclick=window.location="{{(path('app_admin_vintage_addCard',{id: id})) }}">Add</button>
+    <button type="button" class="btn btn-primary" onclick=window.location="{{(path('app_admin_vintage_addCard',{id: id})) }}">Add</button>
 
 
 {% else %}

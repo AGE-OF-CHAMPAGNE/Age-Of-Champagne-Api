@@ -119,3 +119,6 @@ button {
 .item {
   position: relative;
 }
+.main-content {
+  width: 100%;
+}
