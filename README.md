@@ -7,7 +7,7 @@
 <a href="https://github.com/AxelRhul" target="_blank">Lien GitHub</a>
 
 <a href="https://twitter.com/axel_rhul" target="_blank">Lien Twitter</a>
-
+***
 ### Gleb Bushukin
 
 ## Technologies Utilisée
